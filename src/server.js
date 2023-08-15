@@ -17,7 +17,9 @@ const httpServer = http.createServer(app);
 
 // const wss = new WebSocket.Server({ server });
 const wsServer = SocketIO(httpServer);
+
 wsServer.on(`connection`, (socket) => {
+  wsServer.socketsJoin(`announcement`);
   socket[`nickname`] = `Anon`;
   socket.onAny((e) => {
     console.log(`Socket Event:${e}`);

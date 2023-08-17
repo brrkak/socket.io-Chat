@@ -50,7 +50,6 @@ async function getMedia(deviceId) {
     if (!deviceId) {
       await getCameras();
     }
-    await getCameras();
   } catch (e) {
     console.log(e);
   }

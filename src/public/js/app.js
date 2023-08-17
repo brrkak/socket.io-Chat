@@ -88,6 +88,13 @@ function handleCameraClick() {
 
 async function handleCameraChange() {
   await getMedia(camerasSelect.value);
+  if (myPeerConnection) {
+    const videoTrack = myStream.getVideoTracks()[0];
+    const videoSender = myPeerConnection
+      .getSenders()
+      .find((sender) => sender.track.kind === `video`);
+    videoSender.replaceTrack(videoTrack);
+  }
 }
 
 muteBtn.addEventListener(`click`, handleMuteClick);
@@ -126,19 +133,59 @@ socket.on(`welcome`, async () => {
 });
 
 socket.on(`offer`, async (offer) => {
+  console.log(`received the offer`);
   myPeerConnection.setRemoteDescription(offer);
   const answer = await myPeerConnection.createAnswer();
   myPeerConnection.setLocalDescription(answer);
-  socket.emit(`answer`, answer);
+  socket.emit(`answer`, answer, roomName);
+  console.log(`sent the answer`);
 });
 
 socket.on(`answer`, (answer) => {
+  console.log(`received the answer`);
   myPeerConnection.setRemoteDescription(answer);
 });
+
+socket.on(`ice`, (ice) => {
+  console.log(`received candidate`);
+  myPeerConnection.addIceCandidate(ice);
+});
+
 // Rtc Code
 function makeConnection() {
-  myPeerConnection = new RTCPeerConnection();
+  myPeerConnection = new RTCPeerConnection({
+    iceServers: [
+      {
+        urls: ["stun:ntk-turn-2.xirsys.com"],
+      },
+      {
+        username:
+          "0Vn4o6oJ1QqKcYaF6nXjyZwwlZW4_jOA45-cvykbAjI_gaewDKvhnMgptpcqz48LAAAAAGTdzwRramgwMzI=",
+        credential: "6461939e-3cd1-11ee-ac82-0242ac120004",
+        urls: [
+          "turn:ntk-turn-2.xirsys.com:80?transport=udp",
+          "turn:ntk-turn-2.xirsys.com:3478?transport=udp",
+          "turn:ntk-turn-2.xirsys.com:80?transport=tcp",
+          "turn:ntk-turn-2.xirsys.com:3478?transport=tcp",
+          "turns:ntk-turn-2.xirsys.com:443?transport=tcp",
+          "turns:ntk-turn-2.xirsys.com:5349?transport=tcp",
+        ],
+      },
+    ],
+  });
+  myPeerConnection.addEventListener(`icecandidate`, handleIce);
+  myPeerConnection.addEventListener(`track`, handleTrack);
   myStream
     .getTracks()
     .forEach((track) => myPeerConnection.addTrack(track, myStream));
+}
+
+function handleIce(data) {
+  console.log(`sent candidate`);
+  socket.emit(`ice`, data.candidate, roomName);
+}
+function handleTrack(data) {
+  console.log(`handleTrack`);
+  const peerFace = document.getElementById(`peerFace`);
+  peerFace.srcObject = data.streams[0];
 }

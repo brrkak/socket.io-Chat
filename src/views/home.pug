@@ -19,6 +19,10 @@ html(lang="en")
                 button#mute Mute
                 button#camera Turn Camera Off 
                 select#cameras
-                video#peerFace(autoplay,playsinline,width="400",height="400")  
+                video#peerFace(autoplay,playsinline,width="400",height="400") 
+        div#chat
+            form
+                input(placeholder="chatting", required, type="text") 
+                button Enter
 script(src="/socket.io/socket.io.js")
 script(src="/public/js/app.js")

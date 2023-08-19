@@ -1,10 +1,13 @@
 const socket = io();
 
+const call = document.getElementById(`call`);
 const myFace = document.getElementById(`myFace`);
 const muteBtn = document.getElementById(`mute`);
 const cameraBtn = document.getElementById(`camera`);
 const camerasSelect = document.getElementById(`cameras`);
-const call = document.getElementById(`call`);
+const chat = document.getElementById(`chat`);
+const chatList = document.getElementById(`chatList`);
+const chatForm = document.getElementById(`chatForm`);
 
 call.hidden = true;
 
@@ -14,6 +17,7 @@ let cameraOff = false;
 let roomName;
 let myPeerConnection;
 let myDataChannel;
+let dataChannel;
 
 async function getCameras() {
   try {
@@ -123,6 +127,30 @@ async function handleWelcomeSubmit(e) {
 
 welcomeForm.addEventListener(`submit`, handleWelcomeSubmit);
 
+// // Chat
+// function handleChatSubmit(event) {
+//   event.preventDefault();
+//   const input = chatForm.querySelector("input");
+//   const message = input.value;
+//   const span = document.createElement("span");
+//   span.innerText = message;
+//   span.className = "myMessage";
+//   chatList.appendChild(span);
+//   input.value = "";
+//   chatList.scrollTop = chatList.scrollHeight;
+//   dataChannel.send(message);
+// }
+
+// function handleRecievedMessage(message) {
+//   const span = document.createElement("span");
+//   span.innerText = message;
+//   span.className = "othersMessage";
+//   chatList.appendChild(span);
+//   chatList.scrollTop = chatList.scrollHeight;
+// }
+
+// chatForm.addEventListener(`submit`,handleChatSubmit)
+
 // Socket Code
 
 socket.on(`welcome`, async () => {
@@ -196,6 +224,7 @@ function handleIce(data) {
 }
 function handleTrack(data) {
   console.log(`handleTrack`);
+
   const peerFace = document.getElementById(`peerFace`);
   peerFace.srcObject = data.streams[0];
 }

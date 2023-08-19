@@ -4,11 +4,12 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel='stylesheet', href='./public/css/style.css')
+        script(src="https://cdn.tailwindcss.com")
         title Noom
   
     body 
     header
-       h1(class=`text-3xl`) Noom  
+       h1(class=`text-3xl font-bold underline`) Noom  
     main
         // LobbyRoom
         div#welcome
@@ -27,7 +28,7 @@ html(lang="en")
         div#chat
             div#chatList
                 form#chatForm
-                    input(placeholder="chatting", required, type="text") 
+                    input(placeholder="chatting", required, type="text")
                     button Enter
 script(src="/socket.io/socket.io.js")
 script(src="/public/js/app.js")

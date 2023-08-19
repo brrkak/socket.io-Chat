@@ -16,7 +16,6 @@ let muted = false;
 let cameraOff = false;
 let roomName;
 let myPeerConnection;
-let myDataChannel;
 let dataChannel;
 
 async function getCameras() {
@@ -127,48 +126,49 @@ async function handleWelcomeSubmit(e) {
 
 welcomeForm.addEventListener(`submit`, handleWelcomeSubmit);
 
-// // Chat
-// function handleChatSubmit(event) {
-//   event.preventDefault();
-//   const input = chatForm.querySelector("input");
-//   const message = input.value;
-//   const span = document.createElement("span");
-//   span.innerText = message;
-//   span.className = "myMessage";
-//   chatList.appendChild(span);
-//   input.value = "";
-//   chatList.scrollTop = chatList.scrollHeight;
-//   dataChannel.send(message);
-// }
+// Chat
+function handleChatSubmit(e) {
+  e.preventDefault();
+  const input = chatForm.querySelector("input");
+  const message = input.value;
+  const span = document.createElement("span");
+  span.innerText = message;
+  span.className = "myMessage";
+  chatList.appendChild(span);
+  input.value = "";
+  chatList.scrollTop = chatList.scrollHeight;
+  dataChannel.send(message);
+}
 
-// function handleRecievedMessage(message) {
-//   const span = document.createElement("span");
-//   span.innerText = message;
-//   span.className = "othersMessage";
-//   chatList.appendChild(span);
-//   chatList.scrollTop = chatList.scrollHeight;
-// }
+function handleRecievedMessage(message) {
+  const span = document.createElement("span");
+  span.innerText = message;
+  span.className = "othersMessage";
+  chatList.appendChild(span);
+  chatList.scrollTop = chatList.scrollHeight;
+}
 
-// chatForm.addEventListener(`submit`,handleChatSubmit)
+chatForm.addEventListener(`submit`, handleChatSubmit);
 
 // Socket Code
 
 socket.on(`welcome`, async () => {
-  myDataChannel = myPeerConnection.createDataChannel(`chat`);
-  myDataChannel.addEventListener(`message`, console.log);
+  dataChannel = myPeerConnection.createDataChannel(`chat`);
+  dataChannel.addEventListener(`message`, (e) => {
+    handleRecievedMessage(e.data);
+  });
   console.log(`made data channel`);
-
   const offer = await myPeerConnection.createOffer();
   myPeerConnection.setLocalDescription(offer);
-  console.log(`sent the offer`);
   socket.emit(`offer`, offer, roomName);
+  console.log(`sent the offer`);
 });
 
 socket.on(`offer`, async (offer) => {
   myPeerConnection.addEventListener(`datachannel`, (e) => {
-    myDataChannel = e.channel;
-    myDataChannel.addEventListener(`message`, (e) => {
-      console.log(e.data);
+    dataChannel = e.channel;
+    dataChannel.addEventListener(`message`, (e) => {
+      handleRecievedMessage(e.data);
     });
   });
   console.log(`received the offer`);

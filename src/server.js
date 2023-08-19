@@ -31,7 +31,10 @@ wsServer.on(`connection`, (socket) => {
   socket.on(`ice`, (ice, roomName) => {
     socket.to(roomName).emit(`ice`, ice);
   });
+  socket.on(`message`, (message, roomName) => {
+    socket.to(roomName).emit(`message`, message);
+  });
 });
 
-const handleListen = () => console.log(`Listening on http://localhost:3000`);
-httpServer.listen(3000, handleListen);
+const handleListen = () => console.log(`Listening on http://localhost:3001`);
+httpServer.listen(3001, handleListen);

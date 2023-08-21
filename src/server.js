@@ -3,8 +3,6 @@ import http from "http";
 import express from "express";
 import SocketIO from "socket.io";
 import { Socket } from "dgram";
-import { tailwindcss } from "tailwindcss";
-import { Postcss } from "postcss";
 
 const app = express();
 

@@ -10,6 +10,7 @@ const chatList = document.getElementById(`chatList`);
 const chatForm = document.getElementById(`chatForm`);
 
 call.hidden = true;
+chat.hidden = true;
 
 let myStream;
 let muted = false;
@@ -109,6 +110,7 @@ const welcome = document.getElementById(`welcome`);
 const welcomeForm = welcome.querySelector(`form`);
 
 async function initCall() {
+  chat.hidden = false;
   welcome.hidden = true;
   call.hidden = false;
   await getMedia();

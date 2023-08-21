@@ -4,20 +4,20 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel='stylesheet', href='./public/css/style.css')
-        script(src="https://cdn.tailwindcss.com")
+        link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous")
         title Noom
   
-    body 
-    header
-       h1(class=`text-3xl font-bold underline`) Noom  
-    main
+    body(class="container col-xl-10 col-xxl-8 px-4 py-5")
+    header(class="row align-items-center g-lg-5 py-5")
+       h1(class="display-4 fw-bold lh-1 text-body-emphasis mb-3") Noom
+    main(class="p-md-5 border rounded-5 bg-body-tertiary")
         // LobbyRoom
-        div#welcome
+        div#welcome( class="form-floating mb-3")
             form
-                input(placeholder="room name",required,type="text")
-                button(class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50") Enter Room
+                input(placeholder="room name",required,type="text",class="form-control" ,id="floatingInput")
+                button(class="w-20 btn btn-lg btn-primary") Enter Room
         // CallRoom
-        div#call
+        div#call(class="form-floating mb-3")
             div#myStream
             video#myFace(autoplay,playsinline, width="400", height="400")  
             button#mute Mute
@@ -28,7 +28,9 @@ html(lang="en")
         div#chat
             div#chatList
                 form#chatForm
-                    input(placeholder="chatting", required, type="text")
-                    button Enter
+                    input(placeholder="chatting", required, type="text",class="form-control" ,id="floatingInput")
+                    button(class="w-20 btn btn-lg btn-primary") Enter
+
+script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous")
 script(src="/socket.io/socket.io.js")
 script(src="/public/js/app.js")

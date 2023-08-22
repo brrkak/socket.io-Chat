@@ -3,27 +3,41 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
+        link(rel='stylesheet', href='./public/css/style.css')
+        link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous")
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css")
         title Noom
-    body 
-    header
-        h1 Noom
-    main
+  
+    body(class="container col-xl-10 col-xxl-8 px-4 py-5")
+    div(class="row align-items-center g-lg-5 py-5")
+    div(class="col-lg-7 text-center text-lg-start")
+        h1(class="display-4 fw-bold lh-1 text-body-emphasis mb-3") Noom
+    main(class="col-md-10 mx-auto col-lg-5")
+        // LobbyRoom
+    div(class="p-4 p-md-5 border rounded-3 bg-body-tertiary")
         div#welcome
-            form
-                input#roomName(placeholder="room name" required, type="text")
-                input#name(placeholder="Nickname" required, type="text")
-                button Enter Room 
-            h4 Open Rooms:
+            form#name
+                input#roomname(placeholder="room name",required,type="text",class="form-control form-control-lg")
+                input#nickname(placeholder="nick name",required,type="text",class="form-control form-control-lg")
+                button(class="w-20 btn btn-lg btn-primary") Enter Room
+            h3 Open Room: 
             ul
-        div#room
-            h3
-            ul  
-             form#name
-                input(placeholder="nickname", required, type="text")
-                button Save  
-            form#msg
-                input(placeholder="message", required, type="text")
-                button Send  
+        // CallRoom
+        div#call(class="form-control")
+        div#myStream(class="d-flex justify-content-lg-between")
+            video#myFace(autoplay,playsinline, width="400", height="400")  
+            video#peerFace(autoplay,playsinline , width="400", height="400") 
+        button#mute(class="float-left") Mute
+        button#camera(class="float-left") Turn Camera Off
+        select#cameras(class="float-left")
+        // ChatRoom
+        div#chat(class="form-control")
+            div#chatList
+            form#chatForm(class="item d-flex gap-3 pt-3")
+                input(placeholder="chatting", required, type="text",class="form-control form-control")
+                button(class="w-20 btn btn btn-primary float-right", class="bi bi-telegram")
+
+              
+script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous")
 script(src="/socket.io/socket.io.js")
 script(src="/public/js/app.js")

@@ -1,0 +1,10 @@
+.myMessage {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 100px;
+}
+.othersMessage {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 100px;
+}

@@ -1,3 +1,3 @@
-# NOOM
+# 실시간 채팅 앱.
 
-Zoom Clone using Node.JS webRTC and Websockets.
+

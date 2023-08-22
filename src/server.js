@@ -3,7 +3,6 @@ import http from "http";
 import express from "express";
 import SocketIO from "socket.io";
 import { Socket } from "dgram";
-import { nextTick } from "process";
 const app = express();
 
 app.set("view engine", "pug");
@@ -35,9 +34,9 @@ wsServer.on(`connection`, (socket) => {
   socket.on(`welcome`, (welcome, roomName) => {
     socket.to(roomName).emit(`welcome`, welcome);
   });
-  socket.on(`nickname`, (nickname, roomName) => {
-    socket.to(roomName).emit(`nickname`, nickname);
-  });
+  // socket.on(`nickname`, (nickname, roomName) => {
+  //   socket.to(roomName).emit(`nickname`, nickname);
+  // });
 });
 
 const handleListen = () => console.log(`Listening on http://localhost:3001`);

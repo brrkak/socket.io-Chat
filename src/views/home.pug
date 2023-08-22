@@ -20,9 +20,11 @@ html(lang="en")
                 input#roomname(placeholder="room name",required,type="text",class="form-control form-control-lg")
                 input#nickname(placeholder="nick name",required,type="text",class="form-control form-control-lg")
                 button(class="w-20 btn btn-lg btn-primary") Enter Room
+            h3 Open Room: 
+            ul
         // CallRoom
         div#call(class="form-control")
-        div#myStream(class="flex")
+        div#myStream(class="d-flex justify-content-lg-between")
             video#myFace(autoplay,playsinline, width="400", height="400")  
             video#peerFace(autoplay,playsinline , width="400", height="400") 
         button#mute(class="float-left") Mute

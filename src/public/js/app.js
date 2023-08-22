@@ -166,14 +166,14 @@ chatForm.addEventListener(`submit`, handleChatSubmit);
 // Socket Code
 
 socket.on(`welcome`, async () => {
-  console.log(`made data channel`);
-  const offer = await myPeerConnection.createOffer();
-  myPeerConnection.setLocalDescription(offer);
-  socket.emit(`offer`, offer, roomName);
   dataChannel = myPeerConnection.createDataChannel(`chat`);
   dataChannel.addEventListener(`message`, (e) => {
     handleRecievedMessage(e.data);
   });
+  console.log(`made data channel`);
+  const offer = await myPeerConnection.createOffer();
+  myPeerConnection.setLocalDescription(offer);
+  socket.emit(`offer`, offer, roomName);
   console.log(`sent the offer`);
 });
 
